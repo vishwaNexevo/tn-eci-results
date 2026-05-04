@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light only;
+  --tn-bg: #f6f7fb;
+}
+html, body { background: var(--tn-bg); color: #0f172a; }
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Custom scrollbar for tables */
+.scroll-thin::-webkit-scrollbar { height: 8px; width: 8px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
