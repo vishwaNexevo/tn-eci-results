@@ -5,6 +5,8 @@ import { Dashboard } from "@/components/Dashboard";
 
 // Force dynamic SSR — the page is rendered fresh for every request so
 // crawlers see live numbers in the HTML.
+export const runtime = "nodejs";
+export const preferredRegion = "bom1";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 

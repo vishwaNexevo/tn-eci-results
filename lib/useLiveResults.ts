@@ -27,7 +27,23 @@ export function useLiveResults(intervalMs = 20000) {
     setState((s) => ({ ...s, refreshing: true, error: isManual ? null : s.error }));
     try {
       const res = await fetch("/api/results", { cache: "no-store" });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) {
+        const payload = (await res.json().catch(() => null)) as
+          | {
+              error?: string;
+              upstreamStatus?: number | null;
+              region?: string | null;
+            }
+          | null;
+
+        const message = payload?.error
+          ? payload.upstreamStatus
+            ? `${payload.error} (${payload.upstreamStatus}${payload.region ? `, ${payload.region}` : ""})`
+            : payload.error
+          : `HTTP ${res.status}`;
+
+        throw new Error(message);
+      }
       const json = (await res.json()) as ApiResponse;
       const normalized = normalize(json, "S22");
       if (!aliveRef.current) return;
